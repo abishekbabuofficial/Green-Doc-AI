@@ -10,7 +10,7 @@ def load_model():
     return model
 
 # Set up API key
-GROQ_API = "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"
+GROQ_API = "YOUR_API_KEY_HERE"
 client = Groq(api_key=GROQ_API)
 
 def chatbot_response(user_input):
