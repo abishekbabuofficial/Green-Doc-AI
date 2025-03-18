@@ -1,0 +1,170 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#one{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+    height: 90vh;
+   z-index: -100;
+}
+
+.chat::before {
+    content: "👤";  /* User Icon */
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.bot::before {
+    content: "🤖";  /* Bot Icon */
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+
+.App{
+    /* min-height: 88vh; */
+    height: auto;
+    max-height: 100vh;
+    display: flex;
+    font-size: 100%;
+}
+
+.sidebar{
+    flex: 1;
+    border-right: 1px solid rgb(100, 100, 100);
+    justify-content: center;
+}
+
+.upperSide{
+    padding: 1rem;
+    color: black;
+    height: 100%;
+}
+
+.upperSideTop {
+    display: flex;
+    color: black;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.brand {
+    font-size: 1.5rem;
+    display: block;
+}
+
+.addBtn{
+    background: #5A4BFF;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    /* font-size: 1.5rem; */
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    border-radius: 0.5rem;
+}
+
+.query {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    color: rgb(0, 0, 0);
+    padding: 1.5rem;
+    width: auto;
+    margin: 1rem auto;
+    border-radius: 0.5rem;
+    border: 1px solid gray;
+}
+
+.main {
+    flex: 3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 2rem;
+}
+
+.chats{
+    overflow: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    width: 100%;
+    flex: 4;
+    border: 1px solid black;
+    border-radius: 0.9rem;
+    background-color: darkseagreen;
+}
+
+.chat-row{
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.chat {
+    /* text-align: center; */
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+    padding: 10px;
+    width: auto;
+    min-width: 10%;
+    text-align: left;
+}
+
+.bot {
+    background: rgb(26, 129, 45);
+    color: white;
+    width: auto;
+    border-color: white;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.chatFooter {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1
+}
+
+.inp {
+    padding: 0.5rem;
+    background: rgba(28, 30, 58, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.5rem;
+    width: 90%;
+}
+
+.inp>input {
+    width: 100%;
+    outline: none;
+    /* padding: 0.5rem; */
+    /* margin: 1.5rem; */
+    color: white;
+}
+
+.inp>input, .send{
+    background: transparent;
+    border: none;
+}
