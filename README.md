@@ -43,7 +43,6 @@ Users can upload plant images for disease detection and ask plant-related questi
 | Frontend | React, JavaScript |
 | Backend | Flask, Python |
 | Model Training | VGG-16 (Transfer Learning) |
-| Image Classification | Deep Learning Model |
 | AI Assistant | Groq LLM |
 
 ---
