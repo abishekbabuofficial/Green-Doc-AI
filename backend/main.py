@@ -6,19 +6,32 @@ from PIL import Image
 from ultralytics import YOLO
 from dotenv import load_dotenv
 
-# Load model
-MODEL_PATH = os.getenv("MODEL_PATH", "best.pt")
-model = YOLO(MODEL_PATH)
+# Load .env for local only
+load_dotenv()
 
-# API Key
-# load_dotenv()
+# ---------------- CONFIG ----------------
+MODEL_PATH = os.getenv("MODEL_PATH", "best.pt")
 GROQ_API = os.getenv("GROQ_API_KEY")
+
+if not GROQ_API:
+    raise ValueError("GROQ_API_KEY not set in environment variables")
+
 client = Groq(api_key=GROQ_API)
 
+# ---------------- APP SETUP ----------------
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
+# ---------------- LOAD MODEL SAFELY ----------------
+model = None
+try:
+    model = YOLO(MODEL_PATH)
+    print("Model loaded successfully")
+except Exception as e:
+    print("Model failed to load:", e)
+
+# ---------------- FUNCTIONS ----------------
 def chatbot_response(user_input):
     try:
         chat_completion = client.chat.completions.create(
@@ -29,35 +42,34 @@ def chatbot_response(user_input):
             model="llama-3.3-70b-versatile",
         )
         return chat_completion.choices[0].message.content
-    except:
+    except Exception as e:
+        print("LLM error:", e)
         return "AI service temporarily unavailable."
 
 def classify_plant_disease(image):
+    if model is None:
+        return "Model not loaded", 0.0
     results = model(image)
-    probs = results[0].probs  # Get the probability object
-    predicted_class_index = probs.top1  # Get index of the highest probability class
+    probs = results[0].probs
+    predicted_class_index = probs.top1
     predicted_class_name = results[0].names[predicted_class_index]
     confs = probs.top1conf.item()
     return predicted_class_name, confs
 
+# ---------------- ROUTES ----------------
 @app.route("/predict/<plant>", methods=["POST"])
 def predict(plant):
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
-    
+
     file = request.files['file']
     img = Image.open(file.stream)
-    print(type(img))
-    # img = np.expand_dims(img, 0)
-    
-    # Perform prediction
-    label, conf = classify_plant_disease(img)
 
-    print("Predicted!!\n\nLabel:", label, "\nConfidence:", conf)
+    label, conf = classify_plant_disease(img)
 
     prompt = f"What are the prevention, cure, and symptoms for the {label} disease in plants with two points in each?"
     detailed_response = chatbot_response(prompt)
-    
+
     return jsonify({
         'class': label,
         'confidence': float(conf),
