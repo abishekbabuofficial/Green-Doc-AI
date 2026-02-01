@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "./Chatbot.css";
 import send from "../../img/send.svg";
-import header from "../../img/header.png";
 import Markdown from "react-markdown";
 
 // import { Link } from 'react-router-dom'
@@ -31,7 +30,7 @@ const Chatbot = () => {
         setQuery("");
     
         try {
-            const response = await fetch("http://127.0.0.1:8000/add_todo", {  // Change port to 8000
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {  // Change port to 8000
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -123,7 +123,7 @@ function Input() {
     const formData = new FormData();
     formData.append("file", selectedFile);
     axios
-      .post(`http://localhost:8000/predict/${url}`, formData)
+      .post(`${import.meta.env.VITE_API_URL}/predict/${url}`, formData)
       .then((response) => {
         console.log(response);
         const obj = response;

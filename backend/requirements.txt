@@ -9,3 +9,5 @@ groq
 pillow
 ultralytics
 streamlit-chat
+gunicorn
+python-dotenv
